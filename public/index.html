@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<head>
+  <meta charset="UTF-8" />
+  <title>GT TFT</title>
+  <script type="module" src="./script.js" defer></script>
+  <link rel="stylesheet" href="./style.css" type="text/css" media="all" />
+</head>
+<body>
+  <main class="maincontent">
+    <h1 id="website-header">GT TFT Snapshots</h1>
+    <div id="leaderboard-info">    
+      <ul id="leaderboard-info-list">
+        <h3 id="basic-info-header">Basic Info</h3>
+        <li>This is the leaderboard for the current semester of GT Snapshots.</li>
+        <li>You must be a GT student or alumni to qualify for snapshots.</li>
+        <li>The ranked leaderboard will be updated hourly, while Snapshots occur every two weeks at Monday, 11:59 PM EST.</li>
+        <li>Snapshot points will be calculated based on the amount of players participating. 
+          If 21 people were participating, 1st place would gain 21 points, and each placement below that would gain one less point</li>
+        <li>Ties will receive the same amount of points, and will count as both places (i.e. tie for 1st will both receive 21 points, next player will be 3rd)</li>
+        <li>Top 6 players on the leaderboard at the last week of snapshots will qualify for the GT Championship.</li>
+        <li>Tiebreakers:
+          <ul>          
+            <li>1. Highest  TFT peak rank when snapshots are active (please record evidence of this!)</li>
+            <li>2. Highest  current TFT rank</li>
+          </ul>
+        <li>Good luck and happy competing!</li>
+    </ul></div>
+    <h2 id="username-rank-header">Current Ranked Leaderboard</h2>
+    <div class="username-rank-grid" role="list">
+      <div class="center-align-rank">
+        <div id="ranked-info-header" class="leaderboard-header">
+          <div id="username" class="header"><span>Username</span></div>
+          <div id="rank" class="header"><span>Rank</span></div>
+          <!-- <div id="snapshot-points" class="header">
+            <span>Snapshot Points</span> -->
+          </div>
+        </div>
+      </div>
+    </div>
+    <h2 id="username-rank-header">Snapshot Points Leaderboard</h2>
+    <div class="username-snapshotpoint-grid" role="list">
+      <div class="center-align-snapshot">
+        <div id="snapshot-point-header" class="leaderboard-header">
+          <div id="username" class="header"><span>Username</span></div>
+          <div id="snapshot-points" class="header">
+            <span>Snapshot Points</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</body>
