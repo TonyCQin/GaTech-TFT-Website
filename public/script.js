@@ -113,7 +113,7 @@ populateHTML();
 // runFunction("/.netlify/functions/resetSnapshot");
 // runFunction("/.netlify/functions/updateStats");
 
-setInterval(() => {
-  runFunction("/.netlify/functions/updateSnapshot");
-  window.location.reload();
-}, 15000);
+// setInterval(() => {
+//   runFunction("/.netlify/functions/updateSnapshot");
+//   window.location.reload();
+// }, 15000);
