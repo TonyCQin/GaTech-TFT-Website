@@ -18,14 +18,10 @@ function compareSnapshot(a, b) {
 }
 
 async function updateSnapshot() {
-  // Read and Parse the JSON File
   // console.log("getting database info");
   const personJSON = JSON.parse((await util.getData()).info.userinfo);
-  // console.log(personJSON);
   const JSONArray = Object.values(personJSON);
-  // console.log(JSONArray[0].snapshotPoints);
   JSONArray.sort(compareSnapshot);
-  // console.log(JSONArray);
 
   // Update Snapshot points
   const len = JSONArray.length;
@@ -43,7 +39,7 @@ exports.handler = async function () {
   return {
     statusCode: 200,
     body: JSON.stringify({
-      message: "The snapshot points were saved!",
+      message: "The snapshot points were updated!",
     }),
   };
 };

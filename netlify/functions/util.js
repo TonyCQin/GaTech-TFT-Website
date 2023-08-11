@@ -48,6 +48,8 @@ const getData = async () => {
   const collection = db.collection("info");
   const info = await collection.find({}).toArray();
 
+  client.close();
+
   return {
     info: {
       isConnected,
@@ -76,6 +78,7 @@ const updateDatabaseSnapshotPoints = async (username, newSnapshotPoints) => {
 
     // Fetch updated data
     const updatedInfo = await collection.find({}).toArray();
+    client.close();
 
     return {
       info: {
@@ -120,6 +123,7 @@ const updateDatabaseStats = async (
 
     // Fetch updated data
     const updatedInfo = await collection.find({}).toArray();
+    client.close();
 
     return {
       info: {
