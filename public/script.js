@@ -83,7 +83,7 @@ const playerSnapshotInnerHTML = function (summonerName, snapshotPoints) {
 async function runFunction(endpoint) {
   const response = await fetch(endpoint).then((response) => response.json());
 
-  // console.log(JSON.stringify(response));
+  console.log(JSON.stringify(response));
   return JSON.stringify(response);
 }
 
@@ -115,6 +115,7 @@ populateHTML();
 // runFunction("/.netlify/functions/updateStats");
 
 setInterval(() => {
+  console.log("running update function");
   runFunction("/.netlify/functions/updateSnapshot");
   // window.location.reload();
 }, 15000);
