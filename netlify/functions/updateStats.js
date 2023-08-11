@@ -1,4 +1,5 @@
-// THIS IS THE BACKEND FILE FOR THE RASPBERRY PI VERSION OF "TonyCQin.github.io"
+const { schedule } = require("@netlify/functions");
+const { Handler, HandlerEvent, HandlerContext } = require("@netlify/functions");
 
 const fs = require("fs").promises;
 // Helper Libraries
@@ -69,7 +70,10 @@ async function getStats(username) {
   return (await util.fetchData(statAPI))[0];
 }
 
-exports.handler = async function () {
+const updateStatsHandler: Handler = async function (
+  event: HandlerEvent,
+  context: HandlerContext
+) {
   updateStats();
   return {
     statusCode: 200,
@@ -79,4 +83,6 @@ exports.handler = async function () {
   };
 };
 
-updateStats();
+const handler = schedule("@hourly", myHandler);
+
+// updateStats();
