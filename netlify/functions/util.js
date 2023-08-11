@@ -1,8 +1,4 @@
 // THIS IS THE BACKEND FILE FOR THE RASPBERRY PI VERSION OF "TonyCQin.github.io"
-
-const { json } = require("express");
-const Participant = require("./Participant.js");
-
 const fs = require("fs").promises;
 let jsonPath = "./public/tft.json";
 module.exports.path = jsonPath;
