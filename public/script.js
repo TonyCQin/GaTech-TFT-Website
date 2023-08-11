@@ -87,6 +87,17 @@ async function runFunction(endpoint) {
   return JSON.stringify(response);
 }
 
+async function getData() {
+  try {
+    const data = await runFunction("/.netlify/functions/getData");
+    const parsedData = JSON.parse(data);
+    const dataArray = parsedData.data;
+    console.log(dataArray);
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 const populateHTML = async function () {
   try {
     const data = await runFunction("/.netlify/functions/getData");
@@ -118,4 +129,5 @@ setInterval(() => {
   console.log("running update function");
   runFunction("/.netlify/functions/updateSnapshot");
   // window.location.reload();
+  getData();
 }, 15000);
