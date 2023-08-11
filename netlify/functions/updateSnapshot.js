@@ -30,7 +30,6 @@ async function updateSnapshot() {
       return console.log(err);
     }
   });
-  console.log("The snapshot points were saved!");
 }
 
 exports.handler = async function () {

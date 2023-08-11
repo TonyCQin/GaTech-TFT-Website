@@ -110,12 +110,4 @@ fetch("/tft.json")
 
 setInterval(() => {
   runFunction("/.netlify/functions/updateSnapshot");
-  fetch("/tft.json")
-    .then((response) => response.json())
-    .then((data) => {
-      console.log(data);
-    })
-    .catch((error) => {
-      console.error("Error fetching the JSON file:", error);
-    });
 }, 15000);
