@@ -1,6 +1,3 @@
-const { schedule } = require("@netlify/functions");
-const { Handler, HandlerEvent, HandlerContext } = require("@netlify/functions");
-
 const fs = require("fs").promises;
 // Helper Libraries
 const Participant = require("./Participant");
@@ -70,10 +67,7 @@ async function getStats(username) {
   return (await util.fetchData(statAPI))[0];
 }
 
-const updateStatsHandler: Handler = async function (
-  event: HandlerEvent,
-  context: HandlerContext
-) {
+exports.handler = async function () {
   updateStats();
   return {
     statusCode: 200,
@@ -83,6 +77,4 @@ const updateStatsHandler: Handler = async function (
   };
 };
 
-const handler = schedule("@hourly", myHandler);
-
-// updateStats();
+updateStats();
