@@ -92,6 +92,7 @@ const populateHTML = async function () {
     const data = await runFunction("/.netlify/functions/getData");
     const parsedData = JSON.parse(data);
     const dataArray = parsedData.data;
+    console.log(dataArray);
     dataArray.forEach((player) => {
       playerRankInnerHTML(
         player.username,
@@ -115,5 +116,5 @@ populateHTML();
 
 setInterval(() => {
   runFunction("/.netlify/functions/updateSnapshot");
-  window.location.reload();
+  // window.location.reload();
 }, 15000);
