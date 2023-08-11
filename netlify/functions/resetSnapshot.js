@@ -37,6 +37,8 @@ exports.handler = async function () {
   resetSnapshot();
   return {
     statusCode: 200,
-    body: "The snapshot points were saved!",
+    body: JSON.stringify({
+      message: "The snapshot points were reset!",
+    }),
   };
 };

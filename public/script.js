@@ -110,4 +110,5 @@ fetch("/tft.json")
 
 setInterval(() => {
   runFunction("/.netlify/functions/updateSnapshot");
+  console.log("updated snapshot points");
 }, 15000);

@@ -80,6 +80,8 @@ exports.handler = async function () {
   updateStats();
   return {
     statusCode: 200,
-    body: "The snapshot points were saved!",
+    body: JSON.stringify({
+      message: "The stats were saved!",
+    }),
   };
 };
