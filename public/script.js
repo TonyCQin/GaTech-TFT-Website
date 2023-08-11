@@ -80,19 +80,10 @@ const playerSnapshotInnerHTML = function (summonerName, snapshotPoints) {
   playerSnapshots.append(playerSnapshot);
 };
 
-function runFunction(endpoint) {
-  fetch(endpoint, {
-    method: "POST",
-  })
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-      return response.text();
-    })
-    .catch((error) => {
-      console.error("Error:", error);
-    });
+async function runFunction(endpoint) {
+  const response = await fetch(endpoint).then((response) => response.json());
+
+  console.log(JSON.stringify(response));
 }
 
 fetch("/tft.json")
@@ -113,14 +104,18 @@ fetch("/tft.json")
     console.error("Error fetching the JSON file:", error);
   });
 
-// setInterval(() => {
-//   runFunction("/api/resetSnapshot");
-//   fetch("/tft.json")
-//     .then((response) => response.json())
-//     .then((data) => {
-//       console.log(data);
-//     })
-//     .catch((error) => {
-//       console.error("Error fetching the JSON file:", error);
-//     });
-// }, 15000);
+// runFunction("/.netlify/functions/updateSnapshot");
+// runFunction("/.netlify/functions/resetSnapshot");
+// runFunction("/.netlify/functions/updateStats");
+
+setInterval(() => {
+  runFunction("/.netlify/functions/updateSnapshot");
+  fetch("/tft.json")
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data);
+    })
+    .catch((error) => {
+      console.error("Error fetching the JSON file:", error);
+    });
+}, 15000);
