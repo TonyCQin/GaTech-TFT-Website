@@ -1,7 +1,8 @@
 // THIS IS THE BACKEND FILE FOR THE RASPBERRY PI VERSION OF "TonyCQin.github.io"
 const fs = require("fs").promises;
-let jsonPath = "./public/tft.json";
-module.exports.path = jsonPath;
+require("dotenv").config();
+const clientPromise = require("./mongodb.js");
+
 let tierMap = new Map([
   ["IRON", 1000],
   ["BRONZE", 2000],
@@ -36,19 +37,110 @@ const fetchData = async (link) => {
 
 module.exports.fetchData = fetchData;
 
-// Fetch the API Key from the config file
+// ENV variable api key
+let api_key = process.env.API_KEY;
+module.exports.fetchAPIKey = api_key;
 
-const fetchAPIKey = async () => {
+const getData = async () => {
+  const client = await clientPromise;
+  const isConnected = await client.topology.isConnected();
+  const db = client.db("userdata");
+  const collection = db.collection("info");
+  const info = await collection.find({}).toArray();
+
+  return {
+    info: {
+      isConnected,
+      userinfo: JSON.stringify(info),
+    },
+  };
+};
+
+module.exports.getData = getData;
+
+const updateDatabaseSnapshotPoints = async (username, newSnapshotPoints) => {
+  // getting data
+  const client = await clientPromise;
+  const isConnected = await client.topology.isConnected();
+  const db = client.db("userdata");
+  const collection = db.collection("info");
+
   try {
-    const data = await fs.readFile("./netlify/functions/config.json");
-    let config = JSON.parse(data);
-    // console.log(config);
-    const apiKey = config.MY_KEY;
-    // console.log(apiKey);
-    return apiKey;
+    // Updating data
+    const filter = { username: username };
+    const update = { $set: { snapshotPoints: newSnapshotPoints } };
+    const result = await collection.updateOne(filter, update);
+
+    // console.log(`Matched count: ${result.matchedCount}`);
+    // console.log(`Modified count: ${result.modifiedCount}`);
+
+    // Fetch updated data
+    const updatedInfo = await collection.find({}).toArray();
+
+    return {
+      info: {
+        isConnected,
+        userinfo: JSON.stringify(updatedInfo),
+      },
+    };
   } catch (error) {
-    console.error(`Got an error trying to read the file: ${error.message}`);
+    console.log("Error updating data:", error);
+    throw error; // Rethrow the error for proper error handling
+  }
+};
+module.exports.updateDatabaseSnapshotPoints = updateDatabaseSnapshotPoints;
+
+const updateDatabaseStats = async (
+  username,
+  newTier,
+  newRank,
+  newLeaguePoints,
+  newOrderingScore
+) => {
+  // getting data
+  const client = await clientPromise;
+  const isConnected = await client.topology.isConnected();
+  const db = client.db("userdata");
+  const collection = db.collection("info");
+
+  try {
+    // Updating data
+    const filter = { username: username };
+    const newProperties = {
+      tier: newTier,
+      rank: newRank,
+      leaguePoints: newLeaguePoints,
+      orderingScore: newOrderingScore,
+    };
+    const update = { $set: newProperties };
+    const result = await collection.updateOne(filter, update);
+
+    console.log(`Matched count: ${result.matchedCount}`);
+    console.log(`Modified count: ${result.modifiedCount}`);
+
+    // Fetch updated data
+    const updatedInfo = await collection.find({}).toArray();
+
+    return {
+      info: {
+        isConnected,
+        userinfo: JSON.stringify(updatedInfo),
+      },
+    };
+  } catch (error) {
+    console.log("Error updating data:", error);
+    throw error; // Rethrow the error for proper error handling
   }
 };
 
-module.exports.fetchAPIKey = fetchAPIKey;
+module.exports.updateDatabaseStats = updateDatabaseStats;
+
+// async function test() {
+//   try {
+//     const data = await updateDatabaseSnapshotPoints("mattjzhou", 1);
+//     console.log(data);
+//   } catch (error) {
+//     console.log("error fetching data", error);
+//   }
+// }
+// test();

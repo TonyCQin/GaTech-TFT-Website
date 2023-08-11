@@ -1,35 +1,41 @@
 // THIS IS THE BACKEND FILE FOR THE RASPBERRY PI VERSION OF "TonyCQin.github.io"
 
 const fs = require("fs").promises;
+const { compareFn } = require("./Participant");
 // Helper Libraries
 const util = require("./util");
 
-// Path to tft.json
-const jsonPath = util.path;
+function compareSnapshot(a, b) {
+  let valueA = a.snapshotPoints;
+  let valueB = b.snapshotPoints;
+  if (valueA < valueB) {
+    return 1;
+  }
+  if (valueA > valueB) {
+    return -1;
+  }
+  return 0;
+}
 
 async function updateSnapshot() {
   // Read and Parse the JSON File
-  const data = await fs.readFile(jsonPath, (err) => {
-    if (err) {
-      console.error("Error reading the file:", err);
-      return;
-    }
-  });
-  let personJSON = JSON.parse(data.toString());
+  // console.log("getting database info");
+  const personJSON = JSON.parse((await util.getData()).info.userinfo);
+  // console.log(personJSON);
+  const JSONArray = Object.values(personJSON);
+  // console.log(JSONArray[0].snapshotPoints);
+  JSONArray.sort(compareSnapshot);
+  // console.log(JSONArray);
 
   // Update Snapshot points
-  const len = personJSON.length;
+  const len = JSONArray.length;
   for (let i = 0; i < len; i++) {
-    personJSON[i].snapshotPoints += len - i;
+    let newSnapshotPoints = JSONArray[i].snapshotPoints;
+    newSnapshotPoints += len - i;
+    // console.log(personJSON[i].username);
+    util.updateDatabaseSnapshotPoints(JSONArray[i].username, newSnapshotPoints);
   }
-
-  // Write to JSON File
-  let jsonData = JSON.stringify(personJSON);
-  fs.writeFile(jsonPath, jsonData, function (err) {
-    if (err) {
-      return console.log(err);
-    }
-  });
+  console.log("The snapshot points were updated!");
 }
 
 exports.handler = async function () {
@@ -41,3 +47,5 @@ exports.handler = async function () {
     }),
   };
 };
+
+// updateSnapshot(); //for testing

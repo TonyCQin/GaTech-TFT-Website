@@ -84,31 +84,36 @@ async function runFunction(endpoint) {
   const response = await fetch(endpoint).then((response) => response.json());
 
   console.log(JSON.stringify(response));
+  return JSON.stringify(response);
 }
 
-fetch("/tft.json")
-  .then((response) => response.json())
-  .then((data) => {
-    data.forEach((player) => {
+const populateHTML = async function () {
+  try {
+    const data = await runFunction("/.netlify/functions/getData");
+    const parsedData = JSON.parse(data);
+    const dataArray = parsedData.data;
+    dataArray.forEach((player) => {
       playerRankInnerHTML(
         player.username,
         player.tier,
         player.rank,
-        player.LP,
+        player.leaguePoints,
         player.snapshotPoints
       );
       playerSnapshotInnerHTML(player.username, player.snapshotPoints);
     });
-  })
-  .catch((error) => {
-    console.error("Error fetching the JSON file:", error);
-  });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+populateHTML();
 
 // runFunction("/.netlify/functions/updateSnapshot");
 // runFunction("/.netlify/functions/resetSnapshot");
 // runFunction("/.netlify/functions/updateStats");
 
-// setInterval(() => {
-//   runFunction("/.netlify/functions/updateSnapshot");
-//   console.log("updated snapshot points");
-// }, 15000);
+setInterval(() => {
+  runFunction("/.netlify/functions/updateSnapshot");
+  window.location.reload();
+}, 15000);
