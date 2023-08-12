@@ -130,4 +130,4 @@ setInterval(() => {
   runFunction("/.netlify/functions/updateSnapshot");
   // window.location.reload();
   getData();
-}, 60000);
+}, 5000);

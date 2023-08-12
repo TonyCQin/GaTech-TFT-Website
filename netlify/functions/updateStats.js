@@ -1,11 +1,7 @@
-const fs = require("fs").promises;
 // Helper Libraries
 const Participant = require("./Participant");
 const util = require("./util");
 
-// Path to tft.json
-const jsonPath = util.path;
-//
 let apiKey;
 
 // Update the Stats of the Summoners on the JSON FIle
@@ -77,4 +73,4 @@ exports.handler = async function () {
   };
 };
 
-updateStats();
+// updateStats();
