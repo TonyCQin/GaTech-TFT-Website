@@ -26,7 +26,7 @@ const playerRankInnerHTML = function (summonerName, tier, rank, leaguePoints) {
   let docRankText = document.createElement("a");
 
   if (tier === "CHALLENGER" || tier === "GRANDMASTER" || tier === "MASTER") {
-    docRankText.innerText = `${rank} ${leaguePoints} LP`;
+    docRankText.innerText = `${tier} ${leaguePoints} LP`;
   } else {
     // docRank.innerText = `${tier} ${rank} ${leaguePoints} LP`;
     docRankText.innerText = `${tier} ${rank} ${leaguePoints} LP`;
