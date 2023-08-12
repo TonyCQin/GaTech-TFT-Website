@@ -33,4 +33,4 @@ exports.handler = async function () {
   };
 };
 
-// resetSnapshot();
+resetSnapshot();

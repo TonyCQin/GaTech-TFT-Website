@@ -29,7 +29,7 @@ const playerRankInnerHTML = function (summonerName, tier, rank, leaguePoints) {
     docRankText.innerText = `${leaguePoints} LP`;
   } else {
     // docRank.innerText = `${tier} ${rank} ${leaguePoints} LP`;
-    docRankText.innerText = `${tier} ${rank}`;
+    docRankText.innerText = `${tier} ${rank} ${leaguePoints} LP`;
   }
 
   docRankText.setAttribute("id", "rank-text");
