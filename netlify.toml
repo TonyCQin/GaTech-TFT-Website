@@ -21,3 +21,6 @@
   ## more info on configuring this file: https://docs.netlify.com/configure-builds/file-based-configuration/
 [functions."updateStats"]
   schedule = "@hourly"
+
+[functions."updateSnapshot"]
+  scheulde = "59 23* /14 * 1*"
