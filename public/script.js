@@ -125,9 +125,9 @@ populateHTML();
 // runFunction("/.netlify/functions/resetSnapshot");
 // runFunction("/.netlify/functions/updateStats");
 
-setInterval(() => {
-  console.log("running update function");
-  runFunction("/.netlify/functions/updateSnapshot");
-  // window.location.reload();
-  getData();
-}, 60000);
+// setInterval(() => {
+//   console.log("running update function");
+//   runFunction("/.netlify/functions/updateSnapshot");
+//   // window.location.reload();
+//   getData();
+// }, 60000);
