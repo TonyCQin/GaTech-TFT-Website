@@ -55,7 +55,7 @@ async function updateStats() {
 // Uses Riot API to gather Stats like LP, Rank, and Tier
 async function getStats(username) {
   // API to Access Summoner ID
-  const idAPI = `https://na1.api.riotgames.com/lol/summoner/v4/summoners/by-name/${username}${apiKey}`;
+  const idAPI = `https://na1.api.riotgames.com/tft/league/v1/entries/by-summoner/${username}${apiKey}`;
   // Get Summoner ID
   let user = await util.fetchData(idAPI);
   // API to Access Stats of Summoners
