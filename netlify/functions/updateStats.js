@@ -50,12 +50,14 @@ async function updateStats() {
     );
   });
   console.log("The stats were updated!");
+  util.sortDatabase();
+  console.log("database maybe sorted");
 }
 
 // Uses Riot API to gather Stats like LP, Rank, and Tier
 async function getStats(username) {
   // API to Access Summoner ID
-  const idAPI = `https://na1.api.riotgames.com/tft/league/v1/entries/by-summoner/${username}${apiKey}`;
+  const idAPI = `https://na1.api.riotgames.com/tft/summoner/v1/summoners/by-name/${username}${apiKey}`;
   // Get Summoner ID
   let user = await util.fetchData(idAPI);
   // API to Access Stats of Summoners
@@ -73,4 +75,4 @@ exports.handler = async function () {
   };
 };
 
-// updateStats();
+updateStats();

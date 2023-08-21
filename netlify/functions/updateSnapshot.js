@@ -44,4 +44,4 @@ exports.handler = async function () {
   };
 };
 
-// updateSnapshot(); //for testing
+updateSnapshot(); //for testing

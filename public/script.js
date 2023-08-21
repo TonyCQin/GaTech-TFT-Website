@@ -98,12 +98,22 @@ async function getData() {
   }
 }
 
+const compareSnapshot = function (a, b) {
+  if (a.snapshotPoints > b.snapshotPoints) {
+    return -1;
+  } else if (a.snapshotPoints < b.snapshotPoints) {
+    return 1;
+  }
+  return 0;
+};
+
 const populateHTML = async function () {
   try {
     const data = await runFunction("/.netlify/functions/getData");
     const parsedData = JSON.parse(data);
     const dataArray = parsedData.data;
     console.log(dataArray);
+    // rank html
     dataArray.forEach((player) => {
       playerRankInnerHTML(
         player.username,
@@ -112,6 +122,10 @@ const populateHTML = async function () {
         player.leaguePoints,
         player.snapshotPoints
       );
+    });
+    // snapshot html
+    dataArray.sort(compareSnapshot);
+    dataArray.forEach((player) => {
       playerSnapshotInnerHTML(player.username, player.snapshotPoints);
     });
   } catch (error) {
