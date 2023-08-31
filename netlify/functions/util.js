@@ -26,13 +26,29 @@ let rankMap = new Map([
 module.exports.rankMap = rankMap;
 
 // Fetch Data from a API Link
-const fetchData = async (link) => {
+const fetchUserID = async (link) => {
   const response = await fetch(link);
   if (!response.ok) {
     throw new Error("Network response was not ok for link: " + link);
   }
   const data = await response.json();
   return data;
+};
+
+module.exports.fetchUserID = fetchUserID;
+
+const fetchData = async (link) => {
+  const response = await fetch(link);
+  if (!response.ok) {
+    throw new Error("Network response was not ok for link: " + link);
+  }
+  const data = await response.json();
+  for (const obj of data) {
+    if (obj.queueType === "RANKED_TFT") {
+      console.log(obj);
+      return obj;
+    }
+  }
 };
 
 module.exports.fetchData = fetchData;
