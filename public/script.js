@@ -1,3 +1,13 @@
+// compare function for the data
+const compareFn = (a, b) => {
+  if (a.orderingScore > b.orderingScore) {
+    return -1;
+  } else if (a.orderingScore < b.orderingScore) {
+    return 1;
+  }
+  return 0;
+};
+
 //function to write ranked leaderboard innerHTML
 const playerRankInnerHTML = function (summonerName, tier, rank, leaguePoints) {
   let playerRanks = document.querySelector(".center-align-rank");
@@ -113,6 +123,7 @@ const populateHTML = async function () {
     const parsedData = JSON.parse(data);
     const dataArray = parsedData.data;
     console.log(dataArray);
+    dataArray.sort(compareFn);
     // rank html
     dataArray.forEach((player) => {
       playerRankInnerHTML(
