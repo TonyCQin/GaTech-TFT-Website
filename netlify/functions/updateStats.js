@@ -18,19 +18,31 @@ async function updateStats() {
   // Loop through the JSON file and update all stats
   for (const curStats of data) {
     await getStats(curStats.username).then((newStats) => {
-      const newUserScore =
-        util.tierMap.get(newStats.tier) +
-        util.rankMap.get(newStats.rank) +
-        newStats.leaguePoints;
-      let player = new Participant(
-        curStats.username,
-        newStats.tier,
-        newStats.rank,
-        newStats.leaguePoints,
-        newUserScore,
-        curStats.snapshotPoints
-      );
-      updatedPeopleStats.push(player);
+      if (typeof newStats == "undefined") {
+        let player = new Participant(
+          curStats.username,
+          "",
+          "Unranked",
+          0,
+          0,
+          curStats.snapshotPoints
+        );
+        updatedPeopleStats.push(player);
+      } else {
+        const newUserScore =
+          util.tierMap.get(newStats.tier) +
+          util.rankMap.get(newStats.rank) +
+          newStats.leaguePoints;
+        let player = new Participant(
+          curStats.username,
+          newStats.tier,
+          newStats.rank,
+          newStats.leaguePoints,
+          newUserScore,
+          curStats.snapshotPoints
+        );
+        updatedPeopleStats.push(player);
+      }
       // console.log("the stats were updated");
     });
   }
