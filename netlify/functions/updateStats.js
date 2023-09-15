@@ -21,8 +21,8 @@ async function updateStats() {
       if (typeof newStats == "undefined") {
         let player = new Participant(
           curStats.username,
-          "",
           "Unranked",
+          "",
           0,
           0,
           curStats.snapshotPoints
