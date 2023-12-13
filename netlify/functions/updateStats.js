@@ -17,6 +17,8 @@ async function updateStats() {
 
   // Loop through the JSON file and update all stats
   for (const curStats of data) {
+    await new Promise((resolve) => setTimeout(resolve, 500));
+
     await getStats(curStats.username).then((newStats) => {
       if (typeof newStats == "undefined") {
         let player = new Participant(
@@ -33,6 +35,8 @@ async function updateStats() {
           util.tierMap.get(newStats.tier) +
           util.rankMap.get(newStats.rank) +
           newStats.leaguePoints;
+        console.log(util.tierMap.get(newStats.tier));
+        console.log(newUserScore);
         let player = new Participant(
           curStats.username,
           newStats.tier,

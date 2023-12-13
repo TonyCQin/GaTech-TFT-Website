@@ -9,10 +9,11 @@ let tierMap = new Map([
   ["SILVER", 3000],
   ["GOLD", 4000],
   ["PLATINUM", 5000],
-  ["DIAMOND", 6000],
-  ["MASTER", 7000],
-  ["GRANDMASTER", 7000],
-  ["CHALLENGER", 7000],
+  ["EMERALD", 6000],
+  ["DIAMOND", 7000],
+  ["MASTER", 8000],
+  ["GRANDMASTER", 8000],
+  ["CHALLENGER", 8000],
 ]);
 module.exports.tierMap = tierMap;
 
@@ -116,6 +117,9 @@ const updateDatabaseStats = async (
   newLeaguePoints,
   newOrderingScore
 ) => {
+  console.log(username);
+  console.log(newTier);
+  console.log(newOrderingScore);
   // getting data
   const client = await clientPromise;
   const isConnected = await client.topology.isConnected();
