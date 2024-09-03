@@ -1,7 +1,6 @@
 const username = require("./username");
 const util = require("./util");
 const Participant = require("./Participant");
-const { user } = require("firebase-functions/v1/auth");
 
 // Uses Riot API to gather Stats like LP, Rank, and Tier
 async function getStats(username, tag) {
