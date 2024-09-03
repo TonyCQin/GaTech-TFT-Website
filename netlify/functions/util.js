@@ -1,4 +1,3 @@
-// THIS IS THE BACKEND FILE FOR THE RASPBERRY PI VERSION OF "TonyCQin.github.io"
 const fs = require("fs").promises;
 require("dotenv").config();
 const clientPromise = require("./mongodb.js");
@@ -27,7 +26,7 @@ let rankMap = new Map([
 module.exports.rankMap = rankMap;
 
 // Fetch Data from a API Link
-const fetchUserID = async (link) => {
+const fetchID = async (link) => {
   const response = await fetch(link);
   if (!response.ok) {
     throw new Error("Network response was not ok for link: " + link);
@@ -36,7 +35,7 @@ const fetchUserID = async (link) => {
   return data;
 };
 
-module.exports.fetchUserID = fetchUserID;
+module.exports.fetchID = fetchID;
 
 const fetchData = async (link) => {
   const response = await fetch(link);
@@ -109,6 +108,37 @@ const updateDatabaseSnapshotPoints = async (username, newSnapshotPoints) => {
   }
 };
 module.exports.updateDatabaseSnapshotPoints = updateDatabaseSnapshotPoints;
+
+const insertUser = async (username, tier, rank, lp, orderingScore) => {
+  const client = await clientPromise;
+  const isConnected = await client.topology.isConnected();
+  const db = client.db("userdata");
+  const collection = db.collection("info");
+
+  try {
+    const user = {
+      username: username,
+      tier: tier,
+      rank: rank,
+      leaguePoints: lp,
+      orderingScore: orderingScore,
+      snapshotPoints: 0,
+    };
+    const result = collection.insertOne(user);
+    console.log(
+      `${result.insertedCount} documents were inserted with the _id: ${result.insertedId}`
+    );
+    return {
+      info: {
+        isConnected,
+      },
+    };
+  } catch (error) {
+    console.log("Error updating data:", error);
+    throw error; // Rethrow the error for proper error handling
+  }
+};
+module.exports.insertUser = insertUser;
 
 const updateDatabaseStats = async (
   username,
