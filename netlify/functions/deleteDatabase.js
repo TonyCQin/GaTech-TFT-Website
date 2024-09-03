@@ -1,7 +1,7 @@
 require("dotenv").config();
 const clientPromise = require("./mongodb.js");
 
-const sortDatabase = async () => {
+const deleteDatabase = async () => {
   const client = await clientPromise;
   const isConnected = await client.topology.isConnected();
   const db = client.db("userdata");
@@ -15,4 +15,4 @@ const sortDatabase = async () => {
   }
 };
 
-sortDatabase();
+deleteDatabase();

@@ -109,7 +109,7 @@ const updateDatabaseSnapshotPoints = async (username, newSnapshotPoints) => {
 };
 module.exports.updateDatabaseSnapshotPoints = updateDatabaseSnapshotPoints;
 
-const insertUser = async (username, tier, rank, lp, orderingScore) => {
+const insertUser = async (username, tag, tier, rank, lp, orderingScore) => {
   const client = await clientPromise;
   const isConnected = await client.topology.isConnected();
   const db = client.db("userdata");
@@ -118,6 +118,7 @@ const insertUser = async (username, tier, rank, lp, orderingScore) => {
   try {
     const user = {
       username: username,
+      tag: tag,
       tier: tier,
       rank: rank,
       leaguePoints: lp,
@@ -142,6 +143,7 @@ module.exports.insertUser = insertUser;
 
 const updateDatabaseStats = async (
   username,
+  tag,
   newTier,
   newRank,
   newLeaguePoints,

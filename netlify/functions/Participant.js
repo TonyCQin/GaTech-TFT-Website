@@ -1,6 +1,7 @@
 class Participant {
   constructor(
     username,
+    tag,
     tier,
     rank,
     leaguePoints,
@@ -8,6 +9,7 @@ class Participant {
     snapshotPoints = 0
   ) {
     this.username = username;
+    this.tag = tag;
     this.tier = tier;
     this.rank = rank;
     this.leaguePoints = leaguePoints;

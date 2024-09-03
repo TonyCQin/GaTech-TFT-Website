@@ -1,6 +1,7 @@
 // Helper Libraries
 const Participant = require("./Participant");
 const util = require("./util");
+const username = require("./username");
 
 let apiKey;
 
@@ -19,10 +20,11 @@ async function updateStats() {
   for (const curStats of data) {
     await new Promise((resolve) => setTimeout(resolve, 500));
 
-    await getStats(curStats.username).then((newStats) => {
+    await getStats(curStats.username, curStats.tag).then((newStats) => {
       if (typeof newStats == "undefined") {
         let player = new Participant(
           curStats.username,
+          curStats.tag,
           "Unranked",
           "",
           0,
@@ -39,6 +41,7 @@ async function updateStats() {
         console.log(newUserScore);
         let player = new Participant(
           curStats.username,
+          curStats.tag,
           newStats.tier,
           newStats.rank,
           newStats.leaguePoints,
@@ -59,6 +62,7 @@ async function updateStats() {
   updatedPeopleStats.forEach((player) => {
     util.updateDatabaseStats(
       player.username,
+      player.tag,
       player.tier,
       player.rank,
       player.leaguePoints,
@@ -71,13 +75,16 @@ async function updateStats() {
 }
 
 // Uses Riot API to gather Stats like LP, Rank, and Tier
-async function getStats(username) {
+async function getStats(username, tag) {
   // API to Access Summoner ID
-  const idAPI = `https://na1.api.riotgames.com/tft/summoner/v1/summoners/by-name/${username}${apiKey}`;
+  const idAPI = `https://americas.api.riotgames.com/riot/account/v1/accounts/by-riot-id/${username}/${tag}${apiKey}`;
   // Get Summoner ID
-  let user = await util.fetchUserID(idAPI);
-  // API to Access Stats of Summoners
-  const statAPI = `https://na1.api.riotgames.com/tft/league/v1/entries/by-summoner/${user.id}${apiKey}`;
+  let puuid = await util.fetchID(idAPI);
+  // API to Access Summoners ID through puuid
+  const summoneridAPI = `https://na1.api.riotgames.com/tft/summoner/v1/summoners/by-puuid/${puuid.puuid}${apiKey}`;
+  let summonerID = await util.fetchID(summoneridAPI);
+  // API to access stats of username
+  const statAPI = `https://na1.api.riotgames.com/tft/league/v1/entries/by-summoner/${summonerID.id}${apiKey}`;
   return await util.fetchData(statAPI);
 }
 

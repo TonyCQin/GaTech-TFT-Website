@@ -8,12 +8,14 @@ async function getStats(username, tag) {
   const idAPI = `https://americas.api.riotgames.com/riot/account/v1/accounts/by-riot-id/${username}/${tag}${apiKey}`;
   // Get Summoner ID
   let puuid = await util.fetchID(idAPI);
-  // API to Access Stats of Summoners
+  // API to Access Summoners ID through puuid
   const summoneridAPI = `https://na1.api.riotgames.com/tft/summoner/v1/summoners/by-puuid/${puuid.puuid}${apiKey}`;
   let summonerID = await util.fetchID(summoneridAPI);
+  // API to access stats of username
   const statAPI = `https://na1.api.riotgames.com/tft/league/v1/entries/by-summoner/${summonerID.id}${apiKey}`;
   return await util.fetchData(statAPI);
 }
+
 let apiKey;
 
 async function writeStats() {
@@ -22,6 +24,18 @@ async function writeStats() {
   const usernames = [
     new username("AetherCrest", "yep"),
     new username("GeneralCai", "NA1"),
+    new username("TheSaltyPika", "NA1"),
+    new username("Teenyclover", "Ouch"),
+    new username("shaply", "400"),
+    new username("Djdawg678", "NA1"),
+    new username("N8hanGyoz", "8220"),
+    new username("Danbot110", "NA1"),
+    new username("basicallyAlex", "NA1"),
+    new username("hung", "002"),
+    new username("mattjzhou", "NA1"),
+    new username("chan", "1250"),
+    new username("maeyin", "NA1"),
+    new username("tkamat", "moc"),
   ];
 
   for (const username of usernames) {
@@ -37,14 +51,24 @@ async function writeStats() {
           stats.leaguePoints;
         player = new Participant(
           username.username,
+          username.tag,
           stats.tier,
           stats.rank,
           stats.leaguePoints,
           newUserScore,
           0
         );
+        console.log(player);
       } else {
-        player = new Participant(username.username, "UNRANKED", "", 0, 0, 0);
+        player = new Participant(
+          username.username,
+          username.tag,
+          "UNRANKED",
+          "",
+          0,
+          0,
+          0
+        );
       }
       playerStats.push(player);
     });
@@ -58,6 +82,7 @@ async function writeStats() {
   playerStats.forEach((player) => {
     util.insertUser(
       player.username,
+      player.tag,
       player.tier,
       player.rank,
       player.leaguePoints,
