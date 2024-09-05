@@ -3,12 +3,10 @@ const Participant = require("./Participant");
 const util = require("./util");
 const username = require("./username");
 
-let apiKey;
-
 // Update the Stats of the Summoners on the JSON FIle
 async function updateStats() {
   // Get the API Key from the external config file
-  apiKey = util.fetchAPIKey;
+  let apiKey = util.fetchAPIKey;
   // console.log(apiKey);
   // List of the updated stats
   let updatedPeopleStats = [];
@@ -20,7 +18,7 @@ async function updateStats() {
   for (const curStats of data) {
     await new Promise((resolve) => setTimeout(resolve, 500));
 
-    await getStats(curStats.username, curStats.tag).then((newStats) => {
+    await getStats(curStats.username, curStats.tag, apiKey).then((newStats) => {
       if (typeof newStats == "undefined") {
         let player = new Participant(
           curStats.username,
@@ -75,7 +73,7 @@ async function updateStats() {
 }
 
 // Uses Riot API to gather Stats like LP, Rank, and Tier
-async function getStats(username, tag) {
+async function getStats(username, tag, apiKey) {
   // API to Access Summoner ID
   const idAPI = `https://americas.api.riotgames.com/riot/account/v1/accounts/by-riot-id/${username}/${tag}${apiKey}`;
   // Get Summoner ID

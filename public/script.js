@@ -9,16 +9,22 @@ const compareFn = (a, b) => {
 };
 
 //function to write ranked leaderboard innerHTML
-const playerRankInnerHTML = function (summonerName, tier, rank, leaguePoints) {
+const playerRankInnerHTML = function (
+  summonerName,
+  tag,
+  tier,
+  rank,
+  leaguePoints
+) {
   let playerRanks = document.querySelector(".center-align-rank");
 
   let playerRanked = document.createElement("div");
   playerRanked.classList.add("player-rank");
 
   let docRankUsername = document.createElement("a");
-  docRankUsername.innerText = `${summonerName}`;
+  docRankUsername.innerText = `${summonerName}#${tag}`;
   docRankUsername.setAttribute("id", "username");
-  docRankUsername.href = `https://lolchess.gg/profile/na/${summonerName}`;
+  docRankUsername.href = `https://lolchess.gg/profile/na/${summonerName}-${tag}`;
   // weird way of keeping the color of the link black
   docRankUsername.style.color = "black";
   docRankUsername.addEventListener("click", () => {
