@@ -136,6 +136,7 @@ const populateHTML = async function () {
     dataArray.forEach((player) => {
       playerRankInnerHTML(
         player.username,
+        player.tag,
         player.tier,
         player.rank,
         player.leaguePoints,
