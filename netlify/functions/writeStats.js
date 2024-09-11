@@ -34,8 +34,12 @@ async function writeStats() {
     new username("hung", "002"),
     new username("mattjzhou", "NA1"),
     new username("chan", "1250"),
-    new username("maeyin", "NA1"),
     new username("tkamat", "moc"),
+    new username("DR Jelqy PHD", "Jelq"),
+    new username("Raspberri", "Pi3"),
+    new username("Candle2k", "NA1"),
+    new username("Jason", "0123"),
+    new username("ah b", "1008"),
   ];
 
   for (const username of usernames) {
