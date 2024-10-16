@@ -6,8 +6,8 @@ const { compareFn } = require("./Participant");
 const util = require("./util");
 
 function compareSnapshot(a, b) {
-  let valueA = a.snapshotPoints;
-  let valueB = b.snapshotPoints;
+  let valueA = a.orderingScore;
+  let valueB = b.orderingScore;
   if (valueA < valueB) {
     return 1;
   }
@@ -22,6 +22,7 @@ async function updateSnapshot() {
   const personJSON = JSON.parse((await util.getData()).info.userinfo);
   const JSONArray = Object.values(personJSON);
   JSONArray.sort(compareSnapshot);
+  console.log(JSONArray);
 
   // Update Snapshot points
   const len = JSONArray.length;

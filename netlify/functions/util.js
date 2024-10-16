@@ -201,38 +201,38 @@ module.exports.updateDatabaseStats = updateDatabaseStats;
 // }
 // test();
 
-const sortDatabase = async () => {
-  const client = await clientPromise;
-  const isConnected = await client.topology.isConnected();
-  const db = client.db("userdata");
-  const collection = db.collection("info");
+// const sortDatabase = async () => {
+//   const client = await clientPromise;
+//   const isConnected = await client.topology.isConnected();
+//   const db = client.db("userdata");
+//   const collection = db.collection("info");
 
-  try {
-    // Fetch data and sort it by leaguePoints
-    const sortedInfo = await collection
-      .find({})
-      .sort({ orderingScore: -1 })
-      .toArray();
+//   try {
+//     // Fetch data and sort it by leaguePoints
+//     const sortedInfo = await collection
+//       .find({})
+//       .sort({ orderingScore: -1 })
+//       .toArray();
 
-    // Delete existing data
-    const deleteResult = await collection.deleteMany({});
-    console.log(`Deleted ${deleteResult.deletedCount} documents`);
-    console.log(deleteResult);
+//     // Delete existing data
+//     const deleteResult = await collection.deleteMany({});
+//     console.log(`Deleted ${deleteResult.deletedCount} documents`);
+//     console.log(deleteResult);
 
-    // Reinsert sorted data
-    const insertResult = await collection.insertMany(sortedInfo);
-    console.log(`Inserted ${insertResult.insertedCount} documents`);
+//     // Reinsert sorted data
+//     const insertResult = await collection.insertMany(sortedInfo);
+//     console.log(`Inserted ${insertResult.insertedCount} documents`);
 
-    return {
-      info: {
-        isConnected,
-        userinfo: JSON.stringify(sortedInfo),
-      },
-    };
-  } catch (error) {
-    console.log("Error deleting, sorting, and reinserting data:", error);
-    throw error;
-  }
-};
+//     return {
+//       info: {
+//         isConnected,
+//         userinfo: JSON.stringify(sortedInfo),
+//       },
+//     };
+//   } catch (error) {
+//     console.log("Error deleting, sorting, and reinserting data:", error);
+//     throw error;
+//   }
+// };
 
-module.exports.sortDatabase = sortDatabase;
+// module.exports.sortDatabase = sortDatabase;

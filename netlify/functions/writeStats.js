@@ -32,14 +32,17 @@ async function writeStats() {
     new username("Danbot110", "NA1"),
     new username("basicallyAlex", "NA1"),
     new username("hung", "002"),
-    new username("mattjzhou", "NA1"),
-    new username("chan", "1250"),
-    new username("tkamat", "moc"),
     new username("DR Jelqy PHD", "Jelq"),
     new username("Raspberri", "Pi3"),
     new username("Candle2k", "NA1"),
     new username("Jason", "0123"),
     new username("ah b", "1008"),
+    new username("AaronTheN00b", "NA1"),
+    new username("flamevenomspider", "NA1"),
+    new username("dunnel", "NA1"),
+    new username("Pogful", "IDOT"),
+    new username("baba", "aware"),
+    new username("anstew", "KNOCK"),
   ];
 
   for (const username of usernames) {
@@ -93,7 +96,6 @@ async function writeStats() {
       player.orderingScore
     );
   });
-  util.sortDatabase();
 }
 
 exports.handler = async function () {

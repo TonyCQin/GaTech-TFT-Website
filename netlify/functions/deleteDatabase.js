@@ -9,6 +9,7 @@ const deleteDatabase = async () => {
 
   try {
     const deleteResult = await collection.deleteMany({});
+    console.log("deleted Database");
   } catch (error) {
     console.log("Error deleting, sorting, and reinserting data:", error);
     throw error;

@@ -1,5 +1,5 @@
 // compare function for the data
-const compareFn = (a, b) => {
+const orderingScoreSort = (a, b) => {
   if (a.orderingScore > b.orderingScore) {
     return -1;
   } else if (a.orderingScore < b.orderingScore) {
@@ -105,17 +105,6 @@ async function runFunction(endpoint) {
   return JSON.stringify(response);
 }
 
-async function getData() {
-  try {
-    const data = await runFunction("/.netlify/functions/getData");
-    const parsedData = JSON.parse(data);
-    const dataArray = parsedData.data;
-    console.log(dataArray);
-  } catch (error) {
-    console.log(error);
-  }
-}
-
 const compareSnapshot = function (a, b) {
   if (a.snapshotPoints > b.snapshotPoints) {
     return -1;
@@ -131,7 +120,7 @@ const populateHTML = async function () {
     const parsedData = JSON.parse(data);
     const dataArray = parsedData.data;
     console.log(dataArray);
-    dataArray.sort(compareFn);
+    dataArray.sort(orderingScoreSort);
     // rank html
     dataArray.forEach((player) => {
       playerRankInnerHTML(

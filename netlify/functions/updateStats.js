@@ -68,7 +68,7 @@ async function updateStats() {
     );
   });
   console.log("The stats were updated!");
-  util.sortDatabase();
+  // util.sortDatabase();
   console.log("database maybe sorted");
 }
 
